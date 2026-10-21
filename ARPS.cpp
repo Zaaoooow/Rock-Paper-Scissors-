@@ -10,6 +10,7 @@ void playGame(){
     bool loop2 = true;
     while(loop2){
         int userMove;
+        cout << endl;
         cout << "Choose your move: " << endl;
         cout << "1. Rock" << endl;
         cout << "2. Paper" << endl;
@@ -19,7 +20,7 @@ void playGame(){
         cin >> userMove;
         cout << endl;
 
-        if(cin.fail() || userMove != 1 && userMove != 2){
+        if(cin.fail() || userMove != 1 && userMove != 2 && userMove != 3){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Invalid choice. Try again." << endl;
@@ -50,6 +51,7 @@ void playGame(){
     }
 }
 void menu(){
+    cout << endl;
     cout << "=======================" << endl;
     cout << "  ROCK PAPER SCiSSORS  " << endl;
     cout << "=======================" << endl;
@@ -64,16 +66,18 @@ int main(){
     while(loop1){
         menu();
         cout << endl << "Enter your choice: ";
-        getline(cin, userChoice);
+        cin >>userChoice;
         
         if(cin.fail() || userChoice != "1" && userChoice != "2"){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << endl;
             cout << "Invalid choice. Try again." << endl;
             continue;
         }
 
         if(userChoice == "1"){
+            cout << endl;
             cout << "Starting game... \n" << endl;
             for(int i = 0; i<3; i++){
                 cout << "." << flush;
