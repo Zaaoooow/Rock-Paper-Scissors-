@@ -1,3 +1,8 @@
+/*
+
+have to add graphics
+
+*/
 #include <bits/stdc++.h>
 #include <chrono>
 #include <iostream>
@@ -5,6 +10,12 @@
 #include <thread>
 #include <limits>
 using namespace std;
+
+vector<string> rock = {"    ____    ",
+                       "   /    \\    ",
+                       "   \\    /    ",
+                       "    ----    "};
+
 
 int playAgain(){
     bool loop1 = true;
@@ -168,6 +179,7 @@ int main(){
     int userChoice;
     bool loop1 = true;
     srand(time(NULL));
+    
     while(loop1){
         menu();
         cout << endl << "Enter your choice: ";
