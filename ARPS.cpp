@@ -44,9 +44,11 @@ void playGame(){
         else if(computerRand == 2){
             cout << "Computer chose Paper!" << endl;
             break;
+    
         }
         else if(computerRand == 3){
             cout << "Computer chose Scissors!" << endl;
+            break;
         }
     }
 }
