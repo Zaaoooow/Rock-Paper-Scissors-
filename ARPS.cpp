@@ -23,9 +23,12 @@ int main(){
     int choice = 0;
     int choice2 = 0;
     int playerScore = 0;
+    int playerScore2 = 0;
     int computerScore = 0;
     int ties = 0;
     int key;
+    int key2;
+    int key3;
     int computer;
 
     string options[] = {"Rock", "Paper", "Scissors"};
@@ -72,6 +75,7 @@ int main(){
             loop2 = true;
             bool p1 = true;
             bool p2 = false;
+            bool p2logic = false;
             while(loop2){
                 if(p1 == true){
                     clear();
@@ -112,30 +116,96 @@ int main(){
                     else if(key == 'r' || key == 'R'){
                         loop2 = false;
                     }
-                    else if(p1 == true && (key == KEY_ENTER && key == '\n' && key == '\r')){
+                    else if((key == KEY_ENTER || key == '\n' || key == '\r')){
+                        clear();
                         p2 = true;
-                        if(p2 == true){
-                            clear();
-                        
-                            mvprintw(3, 5, "Player 2's turn");
+                        bool loop3 = true;
+                        while(loop3){
+                            if(p2 == true){
+                                mvprintw(3, 5, "Player 2's turn");
 
-                            if(choice == 0){
-                                mvprintw(5, 5, "> Rock");
-                            }
-                            else{
-                                mvprintw(5, 5, "  Rock");
-                            }
-                            if(choice == 1){
-                                mvprintw(7, 5, "> Paper");
-                            }
-                            else{
-                                mvprintw(7, 5, "  Paper");
-                            }
-                            if(choice == 2){
-                                mvprintw(9, 5, "> Scissors");
-                            }
-                            else{
-                                mvprintw(9, 5, "  Scissors");
+                                if(choice2 == 0){
+                                    mvprintw(5, 5, "> Rock");
+                                }
+                                else{
+                                    mvprintw(5, 5, "  Rock");
+                                }
+                                if(choice2 == 1){
+                                    mvprintw(7, 5, "> Paper");
+                                }
+                                else{
+                                    mvprintw(7, 5, "  Paper");
+                                }
+                                if(choice2 == 2){
+                                    mvprintw(9, 5, "> Scissors");
+                                }
+                                else{
+                                    mvprintw(9, 5, "  Scissors");
+                                }
+
+                                refresh();
+
+                                key2 = getch();
+
+                                if(key2 == KEY_UP && choice2 > 0){
+                                    choice2--;
+                                }
+                                else if(key2 == KEY_DOWN && choice2 < 2){
+                                    choice2++;
+                                }
+                                else if(key2 == KEY_ENTER || key == '\n' || key == '\r'){
+                                    clear();
+                                    p2logic = true;
+                                    int loop4 = true;
+                                    while(loop4){
+                                        if(p2logic == true){
+                                            refresh();
+                                            mvprintw(3, 5, "Player 1's choice: ");
+                                            if(choice == 0){
+                                                mvprintw(4, 5, "Rock");
+                                            }
+                                            else if(choice == 1){
+                                                mvprintw(4, 5, "Paper");
+                                            }
+                                            else if(choice == 2){
+                                                mvprintw(4, 5, "Scissors");
+                                            }
+                                            mvprintw(6, 5, "Player 2's choice: ");
+                                            if(choice2 == 0){
+                                                mvprintw(7, 5, "Rock");
+                                            }
+                                            else if(choice2 == 1){
+                                                mvprintw(7, 5, "Paper");
+                                            }
+                                            else if(choice2 == 2){
+                                                mvprintw(7, 5, "Scissors");
+                                            }
+
+                                            if(choice == choice2){
+                                                mvprintw(10, 5, "It's a tie");
+                                            }
+                                            if((choice == 0 && choice2 == 2) || (choice == 1 && choice2 == 0) || (choice == 2 && choice2 == 1)){
+                                                mvprintw(10, 5, "Player 1 wins!");
+                                            }
+                                            else if((choice2 == 0 && choice == 2) || (choice2 == 1 && choice == 0) || (choice2 == 2 && choice == 1)){
+                                                mvprintw(10, 5, "Player 2 wins!");
+                                            }
+                                            mvprintw(12, 5, "Press any key to start next round");
+
+                                            refresh();
+
+                                            if(getch(), true){
+                                                choice = 0;
+                                                choice2 = 0;
+                                                playerScore2 = 0;
+                                                playerScore = 0;
+                                                loop4 = false;
+                                                loop3 = false;
+                                            }
+                                            
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -210,7 +280,7 @@ int main(){
                     }
 
                     if(choice == computer){
-                        mvprintw(10, 5, "Its a tie!");
+                        mvprintw(10, 5, "It's a tie!");
                         ties++;
                     }
                     else if(choice == 0 && computer == 2 || (choice == 1 && computer == 0) || (choice == 2 && computer == 1)){
