@@ -16,6 +16,13 @@ int main(){
     noecho();
     keypad(stdscr, true);
     curs_set(0);
+    start_color();
+    init_pair(1, COLOR_GREEN, COLOR_BLACK);
+    init_pair(2, COLOR_RED, COLOR_CYAN);
+    init_pair(3, COLOR_WHITE, COLOR_BLACK);
+    init_pair(4, COLOR_BLACK, COLOR_CYAN);
+    init_pair(5, COLOR_RED, COLOR_BLACK);
+    init_pair(6, COLOR_CYAN, COLOR_BLACK);
 
     srand(time(NULL));
 
@@ -40,37 +47,47 @@ int main(){
     bool loop2 = false;
     while(loop1){
         clear();
-
+        attron(COLOR_PAIR(1));
         mvprintw(2, 5, "===========================");
         mvprintw(3, 5, "    ROCK PAPER SCISSORS    ");
         mvprintw(4, 5, "===========================");
             
         mvprintw(5, 5, "   Use UP/DOWN and ENTER   ");
-
+        attroff(COLOR_PAIR(1));
         if(mode == 0){
+            attron(COLOR_PAIR(3));
             mvprintw(8, 5, "> Play against Computer");
+            attroff(COLOR_PAIR(3));
         }
         else{
+            attron(COLOR_PAIR(1));
             mvprintw(8, 5, "  Play against Computer");
+            attron(COLOR_PAIR(1));
         }
         if(mode == 1){
+            attron(COLOR_PAIR(3));
             mvprintw(10, 5, "> Two Player");
+            attroff(COLOR_PAIR(3));
         }
         else{
+            attron(COLOR_PAIR(1));
             mvprintw(10, 5, "  Two Player");
+            attron(COLOR_PAIR(1));
         }
+        attron(COLOR_PAIR(1));
         mvprintw(13, 5, "Press Q to quit");
 
         mvprintw(15, 5, "Press R to reset match scores");
-
+        attroff(COLOR_PAIR(1));
+        attron(COLOR_PAIR(2));
         mvprintw(2, 36, "========================");
         mvprintw(3, 36, "  HIGHEST MATCH SCORES  ");
         mvprintw(4, 36, "------------------------");
-        mvprintw(5, 36, "Player 1: %d", p1Score);
-        mvprintw(6, 36, "Player 2: %d", p2Score);
-        mvprintw(7, 36, "Computer: %d", cScore);
+        mvprintw(5, 36, "Player 1: %d             ", p1Score);
+        mvprintw(6, 36, "Player 2: %d             ", p2Score);
+        mvprintw(7, 36, "Computer: %d             ", cScore);
         mvprintw(8, 36, "========================");
-
+        attroff(COLOR_PAIR(2));
         refresh();
 
         key = getch();
@@ -171,7 +188,7 @@ int main(){
                                 else if(key2 == KEY_DOWN && choice2 < 2){
                                     choice2++;
                                 }
-                                else if(key2 == KEY_ENTER || key == '\n' || key == '\r'){
+                                else if(key2 == KEY_ENTER || key2 == '\n' || key2 == '\r'){
                                     clear();
                                     p2logic = true;
                                     int loop4 = true;
@@ -200,30 +217,31 @@ int main(){
                                             }
 
                                             if(choice == choice2){
-                                                mvprintw(10, 5, "It's a tie");
+                                                mvprintw(10, 5, "It's a tie this round");
                                                 ties++;
                                             }
-                                            if((choice == 0 && choice2 == 2) || (choice == 1 && choice2 == 0) || (choice == 2 && choice2 == 1)){
-                                                mvprintw(10, 5, "Player 1 wins!");
+                                            if((choice == 0 && choice2 == 2) || (choice == 1 && choice2 == 0) || (choice == 2 && choice2 == 1) && (playerScore < 2)){
+                                                mvprintw(10, 5, "Player 1 wins this round!");
                                                 playerScore++;
                                             }
-                                            else if((choice2 == 0 && choice == 2) || (choice2 == 1 && choice == 0) || (choice2 == 2 && choice == 1)){
-                                                mvprintw(10, 5, "Player 2 wins!");
+                                            else if((choice2 == 0 && choice == 2) || (choice2 == 1 && choice == 0) || (choice2 == 2 && choice == 1) && (playerScore2 < 2)){
+                                                mvprintw(10, 5, "Player 2 wins this round!");
                                                 playerScore2++;
                                             }
-
-                                            mvprintw(12, 5, "  FIRST TO 3 WINS!  ");
-                                            mvprintw(13, 5, "====================");
-                                            mvprintw(14, 5, "     SCOREBOARD     ");
-                                            mvprintw(15, 5, "--------------------");
-                                            mvprintw(16, 5, "Player 1's score: %d", playerScore);
-                                            mvprintw(17, 5, "Player 2's score: %d", playerScore2);
-                                            mvprintw(18, 5, "Ties: %d", ties);
-                                            mvprintw(19, 5, "====================");
-
+                                            mvprintw(3, 40, "|");
+                                            mvprintw(4, 40, "|   FIRST TO 3 WINS!  ");
+                                            mvprintw(5, 40, "| ====================");
+                                            mvprintw(6, 40, "|      SCOREBOARD     ");
+                                            mvprintw(7, 40, "| --------------------");
+                                            mvprintw(8, 40, "| Player 1's score: %d", playerScore);
+                                            mvprintw(9, 40, "| Player 2's score: %d", playerScore2);
+                                            mvprintw(10, 40, "| Ties: %d", ties);
+                                            mvprintw(11, 40, "| ====================");
+                                            mvprintw(12, 40, "|");
+                                            
                                             if(playerScore == 3){
-                                                mvprintw(21, 5, "Player 1 wins!");
-                                                mvprintw(23, 5, "Press any key to start next match");
+                                                mvprintw(12, 5, "Player 1 wins this match!");
+                                                mvprintw(14, 5, "Press any key to start next match");
                                                 refresh();
                                                 p1Score++;
                                                 if(getch(), true){
@@ -238,8 +256,8 @@ int main(){
                                                 }
                                             }
                                             else if(playerScore2 == 3){
-                                                mvprintw(21, 5, "Player 2 wins!");
-                                                mvprintw(23, 5, "Press any key to start next match");
+                                                mvprintw(12, 5, "Player 2 wins this match!");
+                                                mvprintw(14, 5, "Press any key to start next match");
                                                 refresh();
                                                 p2Score++;
                                                 if(getch(), true){
@@ -254,7 +272,7 @@ int main(){
                                                 }  
                                             }
                                             else{
-                                                mvprintw(21, 5, "Press any key to start next round");
+                                                mvprintw(12, 5, "Press any key to start next round");
                                                 if(getch(), true){
                                                     loop4 = false;
                                                     loop3 = false;
@@ -279,26 +297,38 @@ int main(){
                 clear();
 
                 if(choice == 0){
+                    attron(COLOR_PAIR(3));
                     mvprintw(3, 5, "> Rock");
+                    attroff(COLOR_PAIR(3));
                 }
                 else{
+                    attron(COLOR_PAIR(1));
                     mvprintw(3, 5, "  Rock");
+                    attroff(COLOR_PAIR(1));
                 }
                 if(choice == 1){
+                    attron(COLOR_PAIR(3));
                     mvprintw(5, 5, "> Paper");
+                    attroff(COLOR_PAIR(3));
                 }
                 else{
+                    attron(COLOR_PAIR(1));
                     mvprintw(5, 5, "  Paper");
+                    attroff(COLOR_PAIR(1));
                 }
                 if(choice == 2){
+                    attron(COLOR_PAIR(3));
                     mvprintw(7, 5, "> Scissors");
+                    attroff(COLOR_PAIR(3));
                 }
                 else{
+                    attron(COLOR_PAIR(1));
                     mvprintw(7, 5, "  Scissors");
+                    attroff(COLOR_PAIR(1));
                 }
-                
+                attron(COLOR_PAIR(1));
                 mvprintw(9, 5, "Press R to return to main menu");
-
+                attroff(COLOR_PAIR(1));
                 refresh();
 
                 key = getch();
@@ -318,7 +348,7 @@ int main(){
                 else if(key == KEY_ENTER || key == '\n' || key == '\r'){
                     computer = rand() % 3;
                     clear();
-                    
+                    attron(COLOR_PAIR(1));
                     mvprintw(3, 5, "Your choice: ");
 
                     if(choice == 0){
@@ -341,33 +371,43 @@ int main(){
                     else if(computer == 2){
                         mvprintw(7, 5, "Scissors");
                     }
-
+                    attroff(COLOR_PAIR(1));
+                    attron(COLOR_PAIR(5));
                     if(choice == computer){
                         mvprintw(10, 5, "It's a tie!");
                         ties++;
                     }
-                    else if(choice == 0 && computer == 2 || (choice == 1 && computer == 0) || (choice == 2 && computer == 1)){
-                        mvprintw(10, 5, "You win!");
+                    else if(choice == 0 && computer == 2 || (choice == 1 && computer == 0) || (choice == 2 && computer == 1) && (playerScore < 2)){
+                        mvprintw(10, 5, "You win this round!");
                         playerScore++;
                     }
-                    else if((computer == 0 && choice == 2) || (computer == 1 && choice == 0 ) || (computer == 2  && choice == 1)){
-                        mvprintw(10, 5, "You lose!");
+                    else if((computer == 0 && choice == 2) || (computer == 1 && choice == 0 ) || (computer == 2  && choice == 1) && (computerScore < 2)){
+                        mvprintw(10, 5, "You lose this round!");
                         computerScore++;
                     }
-
-                    mvprintw(12, 5, " FIRST TO 3 WINS! ");
-
-                    mvprintw(13, 5, "==================");
-                    mvprintw(14, 5, "    SCOREBOARD    ");
-                    mvprintw(15, 5, "------------------");
-                    mvprintw(16, 5, "Your score: %d", playerScore);
-                    mvprintw(17, 5, "Computer score: %d", computerScore);
-                    mvprintw(18, 5, "Ties: %d", ties);
-                    mvprintw(19, 5, "==================");
-
+                    attroff(COLOR_PAIR(5));
+                    attron(COLOR_PAIR(2));
+                    mvprintw(4, 42, " FIRST TO 3 WINS! ");
+                    mvprintw(5, 42, "==================");
+                    mvprintw(6, 42, "    SCOREBOARD    ");
+                    mvprintw(7, 42, "------------------");
+                    attroff(COLOR_PAIR(2));
+                    attron(COLOR_PAIR(4));
+                    mvprintw(8, 42, "Your score: %d     ", playerScore);
+                    mvprintw(9, 42, "Computer score: %d ", computerScore);
+                    mvprintw(10, 42, "Ties: %d           ", ties);
+                    attroff(COLOR_PAIR(4));
+                    attron(COLOR_PAIR(2));
+                    mvprintw(11, 42, "==================");
+                    attroff(COLOR_PAIR(2));
+            
                     if(playerScore == 3){
-                        mvprintw(21, 5, "You won the match!");
-                        mvprintw(23, 5, "Press any key to start next match");
+                        attron(COLOR_PAIR(6));
+                        mvprintw(12, 5, "You won the match!");
+                        attroff(COLOR_PAIR(6));
+                        attron(COLOR_PAIR(1));
+                        mvprintw(14, 5, "Press any key to start next match");
+                        attroff(COLOR_PAIR(1));
                         refresh();
                         getch();
 
@@ -378,8 +418,12 @@ int main(){
                         choice = 0;
                     }
                     else if(computerScore == 3){
-                        mvprintw(21, 5, "You lost the match!");
-                        mvprintw(23, 5, "Press any key to start next match");
+                        attron(COLOR_PAIR(6));
+                        mvprintw(12, 5, "You lost the match!");
+                        attroff(COLOR_PAIR(6));
+                        attron(COLOR_PAIR(1));
+                        mvprintw(14, 5, "Press any key to start next match");
+                        attroff(COLOR_PAIR(1));
                         refresh();
                         getch();
                         
@@ -390,9 +434,11 @@ int main(){
                         choice = 0;
                     }
                     else{
-                        mvprintw(21, 5, "Press any key to start next round");
+                        attron(COLOR_PAIR(1));
+                        mvprintw(12, 5, "Press any key to start next round");
                         refresh();
                         getch();
+                        attroff(COLOR_PAIR(1));
                     }
                 }
                 
