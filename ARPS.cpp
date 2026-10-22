@@ -47,6 +47,10 @@ int main(){
     noecho();
     keypad(stdscr, true);
     curs_set(0);
+    int gameKey;
+    int gameChoice = 0;
+    bool gameLoop = true;
+    bool loop1 = false;
     start_color();
     init_pair(1, COLOR_GREEN, COLOR_BLACK);
     init_pair(2, COLOR_RED, COLOR_CYAN);
@@ -54,10 +58,60 @@ int main(){
     init_pair(4, COLOR_BLACK, COLOR_CYAN);
     init_pair(5, COLOR_RED, COLOR_BLACK);
     init_pair(6, COLOR_CYAN, COLOR_BLACK);
-
     srand(time(NULL));
+    while(gameLoop){
+        clear();
+        attron(COLOR_PAIR(1));
+        mvprintw(2, 5, "===================================");
+        mvprintw(3, 5, "     WELCOME TO EPIC-MINIGAMES     ");
+        mvprintw(4, 5, "===================================");
+        mvprintw(5, 5, "       Use UP/DOWN and ENTER       ");
 
-    int p2Score = 0;
+        mvprintw(8, 5, "CHOOSE YOUR EPIC-MINIGAME : ");
+        mvprintw(9, 5, "---------------------------");
+        attroff(COLOR_PAIR(1));
+
+        if(gameChoice == 0){
+            attron(COLOR_PAIR(3));
+            mvprintw(11, 5, "> ROCK PAPER SCISSORS");
+            attroff(COLOR_PAIR(3));
+        }
+        else{
+            attron(COLOR_PAIR(1));
+            mvprintw(11, 5, "  ROCK PAPER SCISSORS");
+            attroff(COLOR_PAIR(1));
+        }
+        if(gameChoice == 1){
+            attron(COLOR_PAIR(3));
+            mvprintw(13, 5, "> TIC TAC TOE");
+            attroff(COLOR_PAIR(3));
+        }
+        else{
+            attron(COLOR_PAIR(1));
+            mvprintw(13, 5, "  TIC TAC TOE");
+            attroff(COLOR_PAIR(1));
+        }
+        attron(COLOR_PAIR(1));
+        mvprintw(29, 5, "Press Q to quit");
+        attroff(COLOR_PAIR(1));
+
+        refresh();
+        gameKey = getch();
+
+        if(gameKey == KEY_UP && gameChoice > 0){
+            gameChoice--;
+        }
+        else if(gameKey == KEY_DOWN && gameChoice < 1){
+            gameChoice++;
+        }
+        
+        else if(gameChoice == 1 && (gameKey == KEY_ENTER || gameKey == '\r' || gameKey == '\n')){
+            gameLoop = false;
+
+        }
+            
+        else if(gameChoice == 0 && (gameKey == KEY_ENTER || gameKey == '\r' || gameKey == '\n')){
+            int p2Score = 0;
     int p1Score = 0;
     int cScore = 0;
     int mode = 0;
@@ -71,10 +125,7 @@ int main(){
     int key2;
     int key3;
     int computer;
-
-    string options[] = {"Rock", "Paper", "Scissors"};
-
-    bool loop1 = true;
+    loop1 = true;
     bool loop2 = false;
     while(loop1){
         clear();
@@ -106,9 +157,9 @@ int main(){
             attron(COLOR_PAIR(1));
         }
         attron(COLOR_PAIR(1));
-        mvprintw(13, 5, "Press Q to quit");
+        mvprintw(13, 5, "Press R to return to main menu");
 
-        mvprintw(15, 5, "Press R to reset match scores");
+        mvprintw(15, 5, "Press E to reset match scores");
         attroff(COLOR_PAIR(1));
         attron(COLOR_PAIR(2));
         mvprintw(2, 36, "========================");
@@ -133,10 +184,10 @@ int main(){
         else if(key == KEY_DOWN && mode < 1){
             mode++;
         }
-        else if(key == 'q' || key == 'Q'){
+        else if(key == 'r' || key == 'R'){
             loop1 = false;
         }
-        else if(key == 'r' || key == 'R'){
+        else if(key == 'e' || key == 'E'){
             p1Score = 0;
             p2Score = 0;
             cScore = 0;
@@ -154,36 +205,86 @@ int main(){
                     attroff(COLOR_PAIR(1));
                     if(choice == 0){
                         attron(COLOR_PAIR(3));
-                        mvprintw(5, 5, "> Rock");
+                        mvprintw(4, 30, R"(
+                       ......       
+                    .:=+++++=-:.    
+                  .-+++++*****+=-.  
+                 .-=+++++++****++-. 
+                 :-++***++++***++-. 
+                 .-=+********+++=.  
+                  ..:-====---:...   )");
+                        mvprintw(5, 5, "> Rock:");
                         attroff(COLOR_PAIR(3));
                     }
                     else{
                         attron(COLOR_PAIR(1));
-                        mvprintw(5, 5, "  Rock");
+                        mvprintw(4, 30, R"(
+                       ......       
+                    .:=+++++=-:.    
+                  .-+++++*****+=-.  
+                 .-=+++++++****++-. 
+                 :-++***++++***++-. 
+                 .-=+********+++=.  
+                  ..:-====---:...   )");
+                        mvprintw(5, 5, "  Rock:");
                         attroff(COLOR_PAIR(1));
                     }
                     if(choice == 1){
                         attron(COLOR_PAIR(3));
-                        mvprintw(7, 5, "> Paper");
+                        mvprintw(13, 30, R"(
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@                                  )");
+                        mvprintw(14, 5, "> Paper:");
                         attroff(COLOR_PAIR(3));
                     }
                     else{
                         attron(COLOR_PAIR(1));
-                        mvprintw(7, 5, "  Paper");
+                        mvprintw(13, 30, R"(
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@                                  )");
+                        mvprintw(14, 5, "  Paper:");
                         attroff(COLOR_PAIR(1));
                     }
                     if(choice == 2){
                         attron(COLOR_PAIR(3));
-                        mvprintw(9, 5, "> Scissors");
+                        mvprintw(22, 30, R"(
+                              .....   
+                            .:::-.   
+                          ..::-.    
+                         .::=-.     
+                    .::.:--.:.      
+                   .:..::..::.      
+                    .::: .::::.     
+                          :.:-                                         )");
+                        mvprintw(22, 5, "> Scissors:");
                         attroff(COLOR_PAIR(3));
                     }
                     else{
                         attron(COLOR_PAIR(1));
-                        mvprintw(9, 5, "  Scissors");
+                        mvprintw(22, 30, R"(
+                              .....   
+                            .:::-.   
+                          ..::-.    
+                         .::=-.     
+                    .::.:--.:.      
+                   .:..::..::.      
+                    .::: .::::.     
+                          :.:-                                         )");
+                        mvprintw(22, 5, "  Scissors:");
                         attron(COLOR_PAIR(1));
                     }
                     attron(COLOR_PAIR(1));
-                    mvprintw(11, 5, "Press R to return to main menu");
+                    mvprintw(3, 50, "Press R to return to menu");
                     attroff(COLOR_PAIR(1));
                     refresh();
 
@@ -210,32 +311,82 @@ int main(){
 
                                 if(choice2 == 0){
                                     attron(COLOR_PAIR(3));
-                                    mvprintw(5, 5, "> Rock");
+                                    mvprintw(4, 30, R"(
+                       ......       
+                    .:=+++++=-:.    
+                  .-+++++*****+=-.  
+                 .-=+++++++****++-. 
+                 :-++***++++***++-. 
+                 .-=+********+++=.  
+                  ..:-====---:...   )");
+                                    mvprintw(5, 5, "> Rock:");
                                     attroff(COLOR_PAIR(3));
                                 }
                                 else{
                                     attron(COLOR_PAIR(1));
-                                    mvprintw(5, 5, "  Rock");
+                                    mvprintw(4, 30, R"(
+                       ......       
+                    .:=+++++=-:.    
+                  .-+++++*****+=-.  
+                 .-=+++++++****++-. 
+                 :-++***++++***++-. 
+                 .-=+********+++=.  
+                  ..:-====---:...   )");
+                                    mvprintw(5, 5, "  Rock:");
                                     attroff(COLOR_PAIR(1));
                                 }
                                 if(choice2 == 1){
                                     attron(COLOR_PAIR(3));
-                                    mvprintw(7, 5, "> Paper");
+                                    mvprintw(13, 30, R"(
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@                                  )");
+                                    mvprintw(14, 5, "> Paper:");
                                     attroff(COLOR_PAIR(3));
                                 }
                                 else{
                                     attron(COLOR_PAIR(1));
-                                    mvprintw(7, 5, "  Paper");
+                                    mvprintw(13, 30, R"(
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@                                  )");
+                                    mvprintw(14, 5, "  Paper:");
                                     attroff(COLOR_PAIR(1));
                                 }
                                 if(choice2 == 2){
                                     attron(COLOR_PAIR(3));
-                                    mvprintw(9, 5, "> Scissors");
+                                    mvprintw(22, 30, R"(
+                              .....   
+                            .:::-.   
+                          ..::-.    
+                         .::=-.     
+                    .::.:--.:.      
+                   .:..::..::.      
+                    .::: .::::.     
+                          :.:-                                         )");
+                                    mvprintw(22, 5, "> Scissors:");
                                     attron(COLOR_PAIR(3));
                                 }
                                 else{
                                     attron(COLOR_PAIR(1));
-                                    mvprintw(9, 5, "  Scissors");
+                                    mvprintw(22, 30, R"(
+                              .....   
+                            .:::-.   
+                          ..::-.    
+                         .::=-.     
+                    .::.:--.:.      
+                   .:..::..::.      
+                    .::: .::::.     
+                          :.:-                                         )");
+                                    mvprintw(22, 5, "  Scissors:");
                                     attroff(COLOR_PAIR(1));
                                 }
 
@@ -284,6 +435,15 @@ int main(){
                                             }
                                             else if(choice == 2){
                                                 mvprintw(4, 5, "Scissors");
+                                                mvprintw(4, 30, R"(
+                              .....   
+                            .:::-.   
+                          ..::-.    
+                         .::=-.     
+                    .::.:--.:.      
+                   .:..::..::.      
+                    .::: .::::.     
+                          :.:-                                         )");
                                             }
                                             attroff(COLOR_PAIR(6));
                                             attron(COLOR_PAIR(1));
@@ -314,6 +474,15 @@ int main(){
                                             }
                                             else if(choice2 == 2){
                                                 mvprintw(15, 5, "Scissors");
+                                                mvprintw(15, 30, R"(
+                              .....   
+                            .:::-.   
+                          ..::-.    
+                         .::=-.     
+                    .::.:--.:.      
+                   .:..::..::.      
+                    .::: .::::.     
+                          :.:-                                         )");
                                             }
                                             attroff(COLOR_PAIR(6));
                                             
@@ -416,36 +585,86 @@ int main(){
 
                 if(choice == 0){
                     attron(COLOR_PAIR(3));
-                    mvprintw(3, 5, "> Rock");
+                    mvprintw(2, 30, R"(
+                       ......       
+                    .:=+++++=-:.    
+                  .-+++++*****+=-.  
+                 .-=+++++++****++-. 
+                 :-++***++++***++-. 
+                 .-=+********+++=.  
+                  ..:-====---:...   )");
+                    mvprintw(3, 5, "> Rock:");
                     attroff(COLOR_PAIR(3));
                 }
                 else{
                     attron(COLOR_PAIR(1));
-                    mvprintw(3, 5, "  Rock");
+                    mvprintw(2, 30, R"(
+                       ......       
+                    .:=+++++=-:.    
+                  .-+++++*****+=-.  
+                 .-=+++++++****++-. 
+                 :-++***++++***++-. 
+                 .-=+********+++=.  
+                  ..:-====---:...   )");
+                    mvprintw(3, 5, "  Rock:");
                     attroff(COLOR_PAIR(1));
                 }
                 if(choice == 1){
                     attron(COLOR_PAIR(3));
-                    mvprintw(5, 5, "> Paper");
+                    mvprintw(12, 30, R"(
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@                                  )");
+                    mvprintw(11, 5, "> Paper:");
                     attroff(COLOR_PAIR(3));
                 }
                 else{
                     attron(COLOR_PAIR(1));
-                    mvprintw(5, 5, "  Paper");
+                    mvprintw(12, 30, R"(
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@                                  )");
+                    mvprintw(11, 5, "  Paper:");
                     attroff(COLOR_PAIR(1));
                 }
                 if(choice == 2){
                     attron(COLOR_PAIR(3));
-                    mvprintw(7, 5, "> Scissors");
+                    mvprintw(21, 30, R"(
+                              .....   
+                            .:::-.   
+                          ..::-.    
+                         .::=-.     
+                    .::.:--.:.      
+                   .:..::..::.      
+                    .::: .::::.     
+                          :.:-                                         )");
+                    mvprintw(21, 5, "> Scissors:");
                     attroff(COLOR_PAIR(3));
                 }
                 else{
                     attron(COLOR_PAIR(1));
-                    mvprintw(7, 5, "  Scissors");
+                    mvprintw(21, 30, R"(
+                              .....   
+                            .:::-.   
+                          ..::-.    
+                         .::=-.     
+                    .::.:--.:.      
+                   .:..::..::.      
+                    .::: .::::.     
+                          :.:-                                         )");
+                    mvprintw(21, 5, "  Scissors:");
                     attroff(COLOR_PAIR(1));
                 }
                 attron(COLOR_PAIR(1));
-                mvprintw(9, 5, "Press R to return to main menu");
+                mvprintw(3, 50, "Press R to return to menu");
                 attroff(COLOR_PAIR(1));
                 refresh();
 
@@ -483,9 +702,26 @@ int main(){
                     }
                     else if(choice == 1){
                         mvprintw(4, 5, "Paper");
+                        mvprintw(4, 30, R"(
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@                                  )");
                     }
                     else if(choice == 2){
                         mvprintw(4, 5, "Scissors");
+                        mvprintw(4, 30, R"(
+                              .....   
+                            .:::-.   
+                          ..::-.    
+                         .::=-.     
+                    .::.:--.:.      
+                   .:..::..::.      
+                    .::: .::::.     
+                          :.:-                                         )");
                     }
                     attroff(COLOR_PAIR(6));
                     attron(COLOR_PAIR(1));
@@ -505,9 +741,26 @@ int main(){
                     }
                     else if(computer == 1){
                         mvprintw(15, 5, "Paper");
+                        mvprintw(15, 30, R"(
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@                                  )");
                     }
                     else if(computer == 2){
                         mvprintw(15, 5, "Scissors");
+                        mvprintw(15, 30, R"(
+                              .....   
+                            .:::-.   
+                          ..::-.    
+                         .::=-.     
+                    .::.:--.:.      
+                   .:..::..::.      
+                    .::: .::::.     
+                          :.:-                                         )");
                     }
                     attroff(COLOR_PAIR(6));
                     attron(COLOR_PAIR(5));
@@ -547,6 +800,7 @@ int main(){
                         mvprintw(29, 5, "Press any key to start next match");
                         attroff(COLOR_PAIR(1));
                         refresh();
+
                         getch();
 
                         p1Score++;
@@ -576,6 +830,7 @@ int main(){
                         mvprintw(27, 5, "Press any key to start next round");
                         refresh();
                         getch();
+                        choice = 0;
                         attroff(COLOR_PAIR(1));
                     }
                 }
@@ -586,6 +841,12 @@ int main(){
 
 
     }
+        }
+    }
+
+
+
+    
     endwin();
 }
 
