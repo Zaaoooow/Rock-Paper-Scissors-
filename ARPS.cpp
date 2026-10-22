@@ -2,6 +2,37 @@
 
 have to add graphics
 
+rocks:
+                       ......       
+                    .:=+++++=-:.    
+                  .-+++++*****+=-.  
+                 .-=+++++++****++-. 
+                 :-++***++++***++-. 
+                 .-=+********+++=.  
+                  ..:-====---:...   
+
+paper: 
+
+                @@=.........-@@
+                @@=.........-@@
+                @@=.........-@@
+                @@=.........-@@
+                @@=.........-@@
+                @@=.........-@@
+                @@=.........-@@
+
+scissors: 
+                    
+            .....   
+           .:::-.   
+          ..::-.    
+         .::=-.     
+    .::.:--.:.      
+   .:..::..::.      
+    .:::..::::.     
+         .:.:-       
+                    
+
 */
 #include <bits/stdc++.h>
 #include <chrono>
@@ -83,9 +114,13 @@ int main(){
         mvprintw(2, 36, "========================");
         mvprintw(3, 36, "  HIGHEST MATCH SCORES  ");
         mvprintw(4, 36, "------------------------");
+        attroff(COLOR_PAIR(2));
+        attron(COLOR_PAIR(4));
         mvprintw(5, 36, "Player 1: %d             ", p1Score);
         mvprintw(6, 36, "Player 2: %d             ", p2Score);
         mvprintw(7, 36, "Computer: %d             ", cScore);
+        attroff(COLOR_PAIR(4));
+        attron(COLOR_PAIR(2));
         mvprintw(8, 36, "========================");
         attroff(COLOR_PAIR(2));
         refresh();
@@ -114,30 +149,42 @@ int main(){
             while(loop2){
                 if(p1 == true){
                     clear();
-
+                    attron(COLOR_PAIR(1));
                     mvprintw(3, 5, "Player 1's turn");
-
+                    attroff(COLOR_PAIR(1));
                     if(choice == 0){
+                        attron(COLOR_PAIR(3));
                         mvprintw(5, 5, "> Rock");
+                        attroff(COLOR_PAIR(3));
                     }
                     else{
+                        attron(COLOR_PAIR(1));
                         mvprintw(5, 5, "  Rock");
+                        attroff(COLOR_PAIR(1));
                     }
                     if(choice == 1){
+                        attron(COLOR_PAIR(3));
                         mvprintw(7, 5, "> Paper");
+                        attroff(COLOR_PAIR(3));
                     }
                     else{
+                        attron(COLOR_PAIR(1));
                         mvprintw(7, 5, "  Paper");
+                        attroff(COLOR_PAIR(1));
                     }
                     if(choice == 2){
+                        attron(COLOR_PAIR(3));
                         mvprintw(9, 5, "> Scissors");
+                        attroff(COLOR_PAIR(3));
                     }
                     else{
+                        attron(COLOR_PAIR(1));
                         mvprintw(9, 5, "  Scissors");
+                        attron(COLOR_PAIR(1));
                     }
-
+                    attron(COLOR_PAIR(1));
                     mvprintw(11, 5, "Press R to return to main menu");
-
+                    attroff(COLOR_PAIR(1));
                     refresh();
 
                     key = getch();
@@ -157,25 +204,39 @@ int main(){
                         bool loop3 = true;
                         while(loop3){
                             if(p2 == true){
+                                attron(COLOR_PAIR(1));
                                 mvprintw(3, 5, "Player 2's turn");
+                                attroff(COLOR_PAIR(1));
 
                                 if(choice2 == 0){
+                                    attron(COLOR_PAIR(3));
                                     mvprintw(5, 5, "> Rock");
+                                    attroff(COLOR_PAIR(3));
                                 }
                                 else{
+                                    attron(COLOR_PAIR(1));
                                     mvprintw(5, 5, "  Rock");
+                                    attroff(COLOR_PAIR(1));
                                 }
                                 if(choice2 == 1){
+                                    attron(COLOR_PAIR(3));
                                     mvprintw(7, 5, "> Paper");
+                                    attroff(COLOR_PAIR(3));
                                 }
                                 else{
+                                    attron(COLOR_PAIR(1));
                                     mvprintw(7, 5, "  Paper");
+                                    attroff(COLOR_PAIR(1));
                                 }
                                 if(choice2 == 2){
+                                    attron(COLOR_PAIR(3));
                                     mvprintw(9, 5, "> Scissors");
+                                    attron(COLOR_PAIR(3));
                                 }
                                 else{
+                                    attron(COLOR_PAIR(1));
                                     mvprintw(9, 5, "  Scissors");
+                                    attroff(COLOR_PAIR(1));
                                 }
 
                                 refresh();
@@ -195,53 +256,104 @@ int main(){
                                     while(loop4){
                                         if(p2logic == true){
                                             refresh();
+                                            attron(COLOR_PAIR(1));
                                             mvprintw(3, 5, "Player 1's choice: ");
+                                            attroff(COLOR_PAIR(1));
+                                            attron(COLOR_PAIR(6));
                                             if(choice == 0){
                                                 mvprintw(4, 5, "Rock");
+                                                mvprintw(4, 30, R"(
+                       ......       
+                    .:=+++++=-:.    
+                  .-+++++*****+=-.  
+                 .-=+++++++****++-. 
+                 :-++***++++***++-. 
+                 .-=+********+++=.  
+                  ..:-====---:...   )");
                                             }
                                             else if(choice == 1){
                                                 mvprintw(4, 5, "Paper");
+                                                mvprintw(4, 30, R"(
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@                                  )");
                                             }
                                             else if(choice == 2){
                                                 mvprintw(4, 5, "Scissors");
                                             }
-                                            mvprintw(6, 5, "Player 2's choice: ");
+                                            attroff(COLOR_PAIR(6));
+                                            attron(COLOR_PAIR(1));
+                                            mvprintw(14, 5, "Player 2's choice: ");
+                                            attron(COLOR_PAIR(1));
+                                            attron(COLOR_PAIR(6));
                                             if(choice2 == 0){
-                                                mvprintw(7, 5, "Rock");
+                                                mvprintw(15, 5, "Rock");
+                                                mvprintw(15, 30, R"(
+                       ......       
+                    .:=+++++=-:.    
+                  .-+++++*****+=-.  
+                 .-=+++++++****++-. 
+                 :-++***++++***++-. 
+                 .-=+********+++=.  
+                  ..:-====---:...   )");
                                             }
                                             else if(choice2 == 1){
-                                                mvprintw(7, 5, "Paper");
+                                                mvprintw(15, 5, "Paper");
+                                                mvprintw(15, 30, R"(
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@
+                  @@=.........-@@                                  )");
                                             }
                                             else if(choice2 == 2){
-                                                mvprintw(7, 5, "Scissors");
+                                                mvprintw(15, 5, "Scissors");
                                             }
-
+                                            attroff(COLOR_PAIR(6));
+                                            
+                                            attron(COLOR_PAIR(5));
                                             if(choice == choice2){
-                                                mvprintw(10, 5, "It's a tie this round");
+                                                mvprintw(25, 5, "It's a tie this round");
                                                 ties++;
                                             }
                                             if((choice == 0 && choice2 == 2) || (choice == 1 && choice2 == 0) || (choice == 2 && choice2 == 1) && (playerScore < 2)){
-                                                mvprintw(10, 5, "Player 1 wins this round!");
+                                                mvprintw(25, 5, "Player 1 wins this round!");
                                                 playerScore++;
                                             }
                                             else if((choice2 == 0 && choice == 2) || (choice2 == 1 && choice == 0) || (choice2 == 2 && choice == 1) && (playerScore2 < 2)){
-                                                mvprintw(10, 5, "Player 2 wins this round!");
+                                                mvprintw(25, 5, "Player 2 wins this round!");
                                                 playerScore2++;
                                             }
-                                            mvprintw(3, 40, "|");
-                                            mvprintw(4, 40, "|   FIRST TO 3 WINS!  ");
-                                            mvprintw(5, 40, "| ====================");
-                                            mvprintw(6, 40, "|      SCOREBOARD     ");
-                                            mvprintw(7, 40, "| --------------------");
-                                            mvprintw(8, 40, "| Player 1's score: %d", playerScore);
-                                            mvprintw(9, 40, "| Player 2's score: %d", playerScore2);
-                                            mvprintw(10, 40, "| Ties: %d", ties);
-                                            mvprintw(11, 40, "| ====================");
-                                            mvprintw(12, 40, "|");
+                                            attroff(COLOR_PAIR(5));
+
+                                            attron(COLOR_PAIR(2));
+                                            mvprintw(4, 40, "  FIRST TO 3 WINS!  ");
+                                            mvprintw(5, 40, "====================");
+                                            mvprintw(6, 40, "     SCOREBOARD     ");
+                                            mvprintw(7, 40, "--------------------");
+                                            attroff(COLOR_PAIR(2));
+                                            attron(COLOR_PAIR(4));
+                                            mvprintw(8, 40, "Player 1's score: %d ", playerScore);
+                                            mvprintw(9, 40, "Player 2's score: %d ", playerScore2);
+                                            mvprintw(10, 40, "Ties: %d             ", ties);
+                                            attroff(COLOR_PAIR(4));
+                                            attron(COLOR_PAIR(2));
+                                            mvprintw(11, 40, "====================");
+                                            attroff(COLOR_PAIR(2));
                                             
                                             if(playerScore == 3){
-                                                mvprintw(12, 5, "Player 1 wins this match!");
-                                                mvprintw(14, 5, "Press any key to start next match");
+                                                attron(COLOR_PAIR(6));
+                                                mvprintw(27, 5, "Player 1 wins this match!");
+                                                attroff(COLOR_PAIR(6));
+                                                attron(COLOR_PAIR(1));
+                                                mvprintw(29, 5, "Press any key to start next match");
+                                                attroff(COLOR_PAIR(1));
                                                 refresh();
                                                 p1Score++;
                                                 if(getch(), true){
@@ -256,8 +368,12 @@ int main(){
                                                 }
                                             }
                                             else if(playerScore2 == 3){
-                                                mvprintw(12, 5, "Player 2 wins this match!");
-                                                mvprintw(14, 5, "Press any key to start next match");
+                                                attron(COLOR_PAIR(6));
+                                                mvprintw(27, 5, "Player 2 wins this match!");
+                                                attroff(COLOR_PAIR(6));
+                                                attron(COLOR_PAIR(1));
+                                                mvprintw(29, 5, "Press any key to start next match");
+                                                attron(COLOR_PAIR(1));
                                                 refresh();
                                                 p2Score++;
                                                 if(getch(), true){
@@ -272,7 +388,9 @@ int main(){
                                                 }  
                                             }
                                             else{
-                                                mvprintw(12, 5, "Press any key to start next round");
+                                                attron(COLOR_PAIR(1));
+                                                mvprintw(27, 5, "Press any key to start next round");
+                                                attroff(COLOR_PAIR(1));
                                                 if(getch(), true){
                                                     loop4 = false;
                                                     loop3 = false;
@@ -347,12 +465,21 @@ int main(){
                 }
                 else if(key == KEY_ENTER || key == '\n' || key == '\r'){
                     computer = rand() % 3;
-                    clear();
+                    clear();    
                     attron(COLOR_PAIR(1));
                     mvprintw(3, 5, "Your choice: ");
-
+                    attroff(COLOR_PAIR(1));
+                    attron(COLOR_PAIR(6));
                     if(choice == 0){
                         mvprintw(4, 5, "Rock");
+                        mvprintw(4, 30, R"(
+                       ......       
+                    .:=+++++=-:.    
+                  .-+++++*****+=-.  
+                 .-=+++++++****++-. 
+                 :-++***++++***++-. 
+                 .-=+********+++=.  
+                  ..:-====---:...   )");
                     }
                     else if(choice == 1){
                         mvprintw(4, 5, "Paper");
@@ -360,29 +487,40 @@ int main(){
                     else if(choice == 2){
                         mvprintw(4, 5, "Scissors");
                     }
-                    mvprintw(6, 5, "Computer: ");
-
+                    attroff(COLOR_PAIR(6));
+                    attron(COLOR_PAIR(1));
+                    mvprintw(14, 5, "Computer: ");
+                    attroff(COLOR_PAIR(1));
+                    attron(COLOR_PAIR(6));
                     if(computer == 0){
-                        mvprintw(7, 5, "Rock");
+                        mvprintw(15, 5, "Rock");
+                        mvprintw(15, 30, R"(
+                       ......       
+                    .:=+++++=-:.    
+                  .-+++++*****+=-.  
+                 .-=+++++++****++-. 
+                 :-++***++++***++-. 
+                 .-=+********+++=.  
+                  ..:-====---:...   )");
                     }
                     else if(computer == 1){
-                        mvprintw(7, 5, "Paper");
+                        mvprintw(15, 5, "Paper");
                     }
                     else if(computer == 2){
-                        mvprintw(7, 5, "Scissors");
+                        mvprintw(15, 5, "Scissors");
                     }
-                    attroff(COLOR_PAIR(1));
+                    attroff(COLOR_PAIR(6));
                     attron(COLOR_PAIR(5));
                     if(choice == computer){
-                        mvprintw(10, 5, "It's a tie!");
+                        mvprintw(25, 5, "It's a tie!");
                         ties++;
                     }
                     else if(choice == 0 && computer == 2 || (choice == 1 && computer == 0) || (choice == 2 && computer == 1) && (playerScore < 2)){
-                        mvprintw(10, 5, "You win this round!");
+                        mvprintw(25, 5, "You win this round!");
                         playerScore++;
                     }
                     else if((computer == 0 && choice == 2) || (computer == 1 && choice == 0 ) || (computer == 2  && choice == 1) && (computerScore < 2)){
-                        mvprintw(10, 5, "You lose this round!");
+                        mvprintw(25, 5, "You lose this round!");
                         computerScore++;
                     }
                     attroff(COLOR_PAIR(5));
@@ -403,10 +541,10 @@ int main(){
             
                     if(playerScore == 3){
                         attron(COLOR_PAIR(6));
-                        mvprintw(12, 5, "You won the match!");
+                        mvprintw(27, 5, "You won the match!");
                         attroff(COLOR_PAIR(6));
                         attron(COLOR_PAIR(1));
-                        mvprintw(14, 5, "Press any key to start next match");
+                        mvprintw(29, 5, "Press any key to start next match");
                         attroff(COLOR_PAIR(1));
                         refresh();
                         getch();
@@ -419,10 +557,10 @@ int main(){
                     }
                     else if(computerScore == 3){
                         attron(COLOR_PAIR(6));
-                        mvprintw(12, 5, "You lost the match!");
+                        mvprintw(27, 5, "You lost the match!");
                         attroff(COLOR_PAIR(6));
                         attron(COLOR_PAIR(1));
-                        mvprintw(14, 5, "Press any key to start next match");
+                        mvprintw(29, 5, "Press any key to start next match");
                         attroff(COLOR_PAIR(1));
                         refresh();
                         getch();
@@ -435,7 +573,7 @@ int main(){
                     }
                     else{
                         attron(COLOR_PAIR(1));
-                        mvprintw(12, 5, "Press any key to start next round");
+                        mvprintw(27, 5, "Press any key to start next round");
                         refresh();
                         getch();
                         attroff(COLOR_PAIR(1));
