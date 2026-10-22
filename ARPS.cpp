@@ -55,6 +55,8 @@ int main(){
             mvprintw(12, 5, "  Scissors");
         }
 
+        mvprintw(15, 5, "Press Q to quit");
+
         refresh();
 
         key = getch();
@@ -68,10 +70,11 @@ int main(){
         else if(key == 'q' || key == 'Q'){
             loop1 = false;
         }
-        else if(key == 'e'){
+        else if(key == KEY_ENTER || key == '\n' || key == '\r'){
             computer = rand() % 3;
-            clear();
 
+            clear();
+            
             mvprintw(3, 5, "Your choice: ");
 
             if(choice == 0){
@@ -81,9 +84,36 @@ int main(){
                 mvprintw(4, 5, "Paper");
             }
             else if(choice == 2){
-                mvprintw(5, 5, "Scissors");
+                mvprintw(4, 5, "Scissors");
             }
 
+            mvprintw(6, 5, "Computer: ");
+
+            if(computer == 0){
+                mvprintw(7, 5, "Rock");
+            }
+            else if(computer == 1){
+                mvprintw(7, 5, "Paper");
+            }
+            else if(computer == 2){
+                mvprintw(7, 5, "Scissors");
+            }
+
+            if(choice == computer){
+                mvprintw(10, 5, "Its a tie!");
+            }
+            else if(choice == 0 && computer == 2 || (choice == 1 && computer == 0) || (choice == 2 && computer == 1)){
+                mvprintw(10, 5, "You win!");
+            }
+            else{
+                mvprintw(10, 5, "You lose!");
+            }
+
+            mvprintw(13, 5, "Pres any key to continue");
+
+            refresh();
+
+            getch();
         }
 
 
