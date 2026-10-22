@@ -19,6 +19,9 @@ int main(){
 
     srand(time(NULL));
 
+    int p2Score = 0;
+    int p1Score = 0;
+    int cScore = 0;
     int mode = 0;
     int choice = 0;
     int choice2 = 0;
@@ -58,6 +61,16 @@ int main(){
         }
         mvprintw(13, 5, "Press Q to quit");
 
+        mvprintw(15, 5, "Press R to reset match scores");
+
+        mvprintw(2, 36, "========================");
+        mvprintw(3, 36, "  HIGHEST MATCH SCORES  ");
+        mvprintw(4, 36, "------------------------");
+        mvprintw(5, 36, "Player 1: %d", p1Score);
+        mvprintw(6, 36, "Player 2: %d", p2Score);
+        mvprintw(7, 36, "Computer: %d", cScore);
+        mvprintw(8, 36, "========================");
+
         refresh();
 
         key = getch();
@@ -70,6 +83,11 @@ int main(){
         }
         else if(key == 'q' || key == 'Q'){
             loop1 = false;
+        }
+        else if(key == 'r' || key == 'R'){
+            p1Score = 0;
+            p2Score = 0;
+            cScore = 0;
         }
         else if(mode == 1 && (key == KEY_ENTER || key == '\n' || key == '\r')){
             loop2 = true;
@@ -183,24 +201,66 @@ int main(){
 
                                             if(choice == choice2){
                                                 mvprintw(10, 5, "It's a tie");
+                                                ties++;
                                             }
                                             if((choice == 0 && choice2 == 2) || (choice == 1 && choice2 == 0) || (choice == 2 && choice2 == 1)){
                                                 mvprintw(10, 5, "Player 1 wins!");
+                                                playerScore++;
                                             }
                                             else if((choice2 == 0 && choice == 2) || (choice2 == 1 && choice == 0) || (choice2 == 2 && choice == 1)){
                                                 mvprintw(10, 5, "Player 2 wins!");
+                                                playerScore2++;
                                             }
-                                            mvprintw(12, 5, "Press any key to start next round");
 
-                                            refresh();
+                                            mvprintw(12, 5, "  FIRST TO 3 WINS!  ");
+                                            mvprintw(13, 5, "====================");
+                                            mvprintw(14, 5, "     SCOREBOARD     ");
+                                            mvprintw(15, 5, "--------------------");
+                                            mvprintw(16, 5, "Player 1's score: %d", playerScore);
+                                            mvprintw(17, 5, "Player 2's score: %d", playerScore2);
+                                            mvprintw(18, 5, "Ties: %d", ties);
+                                            mvprintw(19, 5, "====================");
 
-                                            if(getch(), true){
-                                                choice = 0;
-                                                choice2 = 0;
-                                                playerScore2 = 0;
-                                                playerScore = 0;
-                                                loop4 = false;
-                                                loop3 = false;
+                                            if(playerScore == 3){
+                                                mvprintw(21, 5, "Player 1 wins!");
+                                                mvprintw(23, 5, "Press any key to start next match");
+                                                refresh();
+                                                p1Score++;
+                                                if(getch(), true){
+                                                    choice = 0;
+                                                    choice2 = 0;
+                                                    playerScore2 = 0;
+                                                    playerScore = 0;
+                                                    ties = 0;
+
+                                                    loop4 = false;
+                                                    loop3 = false;
+                                                }
+                                            }
+                                            else if(playerScore2 == 3){
+                                                mvprintw(21, 5, "Player 2 wins!");
+                                                mvprintw(23, 5, "Press any key to start next match");
+                                                refresh();
+                                                p2Score++;
+                                                if(getch(), true){
+                                                    choice = 0;
+                                                    choice2 = 0;
+                                                    playerScore2 = 0;
+                                                    playerScore = 0;
+                                                    ties = 0;
+                                                    
+                                                    loop4 = false;
+                                                    loop3 = false;
+                                                }  
+                                            }
+                                            else{
+                                                mvprintw(21, 5, "Press any key to start next round");
+                                                if(getch(), true){
+                                                    loop4 = false;
+                                                    loop3 = false;
+                                                    choice = 0;
+                                                    choice2 = 0;
+                                                }
                                             }
                                             
                                         }
@@ -250,6 +310,9 @@ int main(){
                     choice++;
                 }
                 else if(key == 'r' || key == 'R'){
+                    choice = 0;
+                    playerScore = 0;
+                    computerScore = 0;
                     loop2 = false;
                 }
                 else if(key == KEY_ENTER || key == '\n' || key == '\r'){
@@ -287,7 +350,7 @@ int main(){
                         mvprintw(10, 5, "You win!");
                         playerScore++;
                     }
-                    else{
+                    else if((computer == 0 && choice == 2) || (computer == 1 && choice == 0 ) || (computer == 2  && choice == 1)){
                         mvprintw(10, 5, "You lose!");
                         computerScore++;
                     }
@@ -304,23 +367,27 @@ int main(){
 
                     if(playerScore == 3){
                         mvprintw(21, 5, "You won the match!");
-                        mvprintw(23, 5, "Press any key to start next round");
+                        mvprintw(23, 5, "Press any key to start next match");
                         refresh();
                         getch();
 
+                        p1Score++;
                         playerScore = 0;
                         computerScore = 0;
                         ties = 0;
+                        choice = 0;
                     }
                     else if(computerScore == 3){
                         mvprintw(21, 5, "You lost the match!");
-                        mvprintw(23, 5, "Press any key to start next round");
+                        mvprintw(23, 5, "Press any key to start next match");
                         refresh();
                         getch();
-                            
+                        
+                        cScore++;
                         playerScore = 0;
                         computerScore = 0;
                         ties = 0;
+                        choice = 0;
                     }
                     else{
                         mvprintw(21, 5, "Press any key to start next round");
@@ -335,130 +402,6 @@ int main(){
 
 
     }
-    /* while(loop2){
-        clear();
-
-        mvprintw(2, 5, "===========================");
-        mvprintw(3, 5, "    ROCK PAPER SCISSORS    ");
-        mvprintw(4, 5, "===========================");
-            
-        mvprintw(6, 5, "Use UP/DOWN and ENTER");
-
-        if(choice == 0){
-            mvprintw(8, 5, "> Rock");
-        }
-        else{
-            mvprintw(8, 5, "  Rock");
-        }
-        if(choice == 1){
-            mvprintw(10, 5, "> Paper");
-        }
-        else{
-            mvprintw(10, 5, "  Paper");
-        }
-        if(choice == 2){
-            mvprintw(12, 5, "> Scissors");
-        }
-        else{
-            mvprintw(12, 5, "  Scissors");
-        }
-
-
-
-        mvprintw(15, 5, "Press Q to quit");
-
-        refresh();
-
-        if(key == KEY_UP && choice > 0){
-            choice--;
-        }
-        else if(key == KEY_DOWN && choice < 2){
-            choice++;
-        }
-        else if(key == 'q' || key == 'Q'){
-            loop2 = false;
-        }
-        else if(key == KEY_ENTER || key == '\n' || key == '\r'){
-            computer = rand() % 3;
-            clear();
-            
-            mvprintw(3, 5, "Your choice: ");
-
-            if(choice == 0){
-                mvprintw(4, 5, "Rock");
-            }
-            else if(choice == 1){
-                mvprintw(4, 5, "Paper");
-            }
-            else if(choice == 2){
-                mvprintw(4, 5, "Scissors");
-            }
-            mvprintw(6, 5, "Computer: ");
-
-            if(computer == 0){
-                mvprintw(7, 5, "Rock");
-            }
-            else if(computer == 1){
-                mvprintw(7, 5, "Paper");
-            }
-            else if(computer == 2){
-                mvprintw(7, 5, "Scissors");
-            }
-
-            if(choice == computer){
-                mvprintw(10, 5, "Its a tie!");
-                ties++;
-            }
-            else if(choice == 0 && computer == 2 || (choice == 1 && computer == 0) || (choice == 2 && computer == 1)){
-                mvprintw(10, 5, "You win!");
-                playerScore++;
-            }
-            else{
-                mvprintw(10, 5, "You lose!");
-                computerScore++;
-            }
-
-            mvprintw(12, 5, " FIRST TO 3 WINS! ");
-
-            mvprintw(13, 5, "==================");
-            mvprintw(14, 5, "    SCOREBOARD    ");
-            mvprintw(15, 5, "------------------");
-            mvprintw(16, 5, "Your score: %d", playerScore);
-            mvprintw(17, 5, "Computer score: %d", computerScore);
-            mvprintw(18, 5, "Ties: %d", ties);
-            mvprintw(19, 5, "==================");
-
-            if(playerScore == 3){
-                mvprintw(21, 5, "You won the match!");
-                mvprintw(23, 5, "Press any key to return to menu");
-                refresh();
-                getch();
-
-                playerScore = 0;
-                computerScore = 0;
-                ties = 0;
-            }
-            else if(computerScore == 3){
-                mvprintw(21, 5, "You lost the match!");
-
-                mvprintw(23, 5, "Press any key to return to menu");
-                refresh();
-                getch();
-                    
-                playerScore = 0;
-                computerScore = 0;
-                ties = 0;
-            }
-            else{
-                mvprintw(21, 5, "Press any key to return to menu");
-                refresh();
-                getch();
-            }
-        }
-
-
-    }
-        */
     endwin();
 }
 
