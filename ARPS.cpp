@@ -8,206 +8,86 @@ have to add graphics
 #include <iostream>
 #include <string>
 #include <thread>
-#include <limits>
+#include <pdcurses.h>
 using namespace std;
-
-vector<string> rock = {"    ____    ",
-                       "   /    \\    ",
-                       "   \\    /    ",
-                       "    ----    "};
-
-
-int playAgain(){
-    bool loop1 = true;
-    bool newMatch = true;
-    while(loop1){
-        int userChoice;
-        cout << endl;
-        cout << "Play again? " << endl;
-        cout << "1. Yes" << endl;
-        cout << "2. Return to menu" << endl;
-        cout << endl;
-        cout << "Your choice: ";
-        cin >> userChoice;
-        cout << endl;
-        //invalid choice
-        if(cin.fail() || userChoice != 1 && userChoice != 2){
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid choice. Try again." << endl;
-            continue;
-        }
-        //starts another round back into playGame
-        if(userChoice == 1){
-            cout << "Starting another round..." << endl;
-            for(int i = 0; i < 3; i++){
-                cout << "." << flush;
-                this_thread::sleep_for(chrono::seconds(1));
-            }
-            cout << endl;
-            return 1;
-        }
-        //returns to menu
-        else if(userChoice == 2){
-            cout << "Returning to main menu..." << endl;
-            for(int i = 0; i < 3; i++){
-                cout << "." << flush;
-                this_thread::sleep_for(chrono::seconds(1));
-            }
-            return 2;
-        }
-    }
-}
-void playGame(){
-    bool newMatch = true;
-    while(newMatch){
-        int playerWins = 0;
-        int computerWins = 0;
-        int ties = 0;
-        bool loop2 = true;
-        while(loop2){
-            cout << endl;
-            int userMove;
-            cout << "First to 3 wins!" << endl;
-            cout << "Choose your move: " << endl;
-            cout << "1. Rock" << endl;
-            cout << "2. Paper" << endl;
-            cout << "3. Scissors" << endl;
-            cout << endl;
-            cout << "Your choice: ";
-            cin >> userMove;
-            cout << endl;
-            // if they fail to input valid inputs
-            if(cin.fail() || userMove != 1 && userMove != 2 && userMove != 3){
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Invalid choice. Try again." << endl;
-                continue;
-            }
-            //if the user chooses an option 1-3
-            if(userMove == 1){
-                cout << "You chose Rock! " << endl;
-            }
-            else if(userMove == 2){
-                cout << "You chose Paper! " << endl;
-            }
-            else if(userMove == 3){
-                cout << "You chose Scissors! " << endl;
-            }
-            cout << endl;
-            int computerRand = rand() % 3 + 1;
-            //if the computer chooses a random option 1-3
-            if(computerRand == 1){
-                cout << "Computer chose Rock!" << endl;
-            }
-            else if(computerRand == 2){
-                cout << "Computer chose Paper!" << endl;
-        
-            }
-            else if(computerRand == 3){
-                cout << "Computer chose Scissors!" << endl;
-            }
-            cout << endl;
-            
-            //winning logic
-            if(userMove == computerRand){
-                cout << "=====================" << endl;
-                cout << "Its a tie this round!" << endl;
-                cout << "=====================" << endl;
-                ties++;
-            }
-            else if(userMove == 1 && computerRand == 3){
-                cout << "===================" << endl;
-                cout << "You win this round!" << endl;
-                cout << "===================" << endl;
-                playerWins++;
-            }
-            else if(userMove == 2 && computerRand == 1){
-                cout << "===================" << endl;
-                cout << "You win this round!" << endl;
-                cout << "===================" << endl;
-                playerWins++;
-            }
-            else if(userMove == 3 && computerRand == 2){
-                cout << "===================" << endl;
-                cout << "You win this round!" << endl;
-                cout << "===================" << endl;
-                playerWins++;
-            }
-            else{
-                cout << "=========================" << endl;
-                cout << "Computer wins this round!" << endl;
-                cout << "=========================" << endl;
-                computerWins++;
-            }
-
-            cout << endl << "--- SCOREBOARD ---" << endl;
-            cout << "Your wins: " << playerWins << endl;
-            cout << "Computer wins: " << computerWins << endl;
-            cout << "Ties: " << ties << endl;
-            cout << "------------------" << endl;
-
-            if(playerWins == 3){
-                cout << "==================" << endl;
-                cout << "You won the match!" << endl;
-                cout << "==================" << endl;
-                break;
-            }
-            else if(computerWins == 3){
-                cout << "===================" << endl;
-                cout << "Computer won match!" << endl;
-                cout << "===================" << endl;
-                break;
-            }
-        }
-        int choice = playAgain();
-        if(choice == 2){
-            newMatch = false;
-        }
-    }
-}
-void menu(){
-    cout << endl;
-    cout << "=======================" << endl;
-    cout << "  ROCK PAPER SCiSSORS  " << endl;
-    cout << "=======================" << endl;
-    cout << "1. PLAY" << endl;
-    cout << "2. QUIT" << endl;
-}
-
 int main(){
-    int userChoice;
-    bool loop1 = true;
+    initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+    curs_set(0);
+
     srand(time(NULL));
-    
+
+    int choice = 0;
+    int key;
+    int computer;
+
+    string options[] = {"Rock", "Paper", "Scissors"};
+
+    bool loop1 = true;
+
     while(loop1){
-        menu();
-        cout << endl << "Enter your choice: ";
-        cin >>userChoice;
-        // if the user fails to input valid inputs
-        if(cin.fail() || userChoice != 1 && userChoice != 2){
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << endl;
-            cout << "Invalid choice. Try again." << endl;
-            continue;
+        clear();
+        mvprintw(2, 5, "===========================");
+        mvprintw(3, 5, "    ROCK PAPER SCISSORS    ");
+        mvprintw(4, 5, "===========================");
+        
+        mvprintw(6, 5, "Use UP/DOWN and ENTER");
+
+        if(choice == 0){
+            mvprintw(8, 5, "> Rock");
         }
-        // this is my if statement for the menu
-        if(userChoice == 1){
-            cout << endl;
-            cout << "Starting game..." << endl;
-            for(int i = 0; i<3; i++){
-                cout << "." << flush;
-                this_thread::sleep_for(chrono::seconds(1));
+        else{
+            mvprintw(8, 5, "  Rock");
+        }
+        if(choice == 1){
+            mvprintw(10, 5, "> Paper");
+        }
+        else{
+            mvprintw(10, 5, "  Paper");
+        }
+        if(choice == 2){
+            mvprintw(12, 5, "> Scissors");
+
+        }
+        else{
+            mvprintw(12, 5, "  Scissors");
+        }
+
+        refresh();
+
+        key = getch();
+
+        if(key == KEY_UP && choice > 0){
+            choice--;
+        }
+        else if(key == KEY_DOWN && choice < 2){
+            choice++;
+        }
+        else if(key == 'q' || key == 'Q'){
+            loop1 = false;
+        }
+        else if(key == 'e'){
+            computer = rand() % 3;
+            clear();
+
+            mvprintw(3, 5, "Your choice: ");
+
+            if(choice == 0){
+                mvprintw(4, 5, "Rock");
             }
-            cout << endl;
-            playGame();
-            cout << endl;
+            else if(choice == 1){
+                mvprintw(4, 5, "Paper");
+            }
+            else if(choice == 2){
+                mvprintw(5, 5, "Scissors");
+            }
+
         }
-        else if(userChoice == 2){
-            cout << endl;
-            cout << "GAME END." << endl;
-            return 0;
-        }
+
+
     }
+    endwin();
 }
+
