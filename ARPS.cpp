@@ -83,12 +83,12 @@ int main(){
         }
         if(gameChoice == 1){
             attron(COLOR_PAIR(3));
-            mvprintw(13, 5, "> TIC TAC TOE");
+            mvprintw(13, 5, "> TIC TAC TOE - still in making (will end quit game)");
             attroff(COLOR_PAIR(3));
         }
         else{
             attron(COLOR_PAIR(1));
-            mvprintw(13, 5, "  TIC TAC TOE");
+            mvprintw(13, 5, "  TIC TAC TOE - still in making (will end quit game)");
             attroff(COLOR_PAIR(1));
         }
         attron(COLOR_PAIR(1));
